@@ -1,26 +1,19 @@
 package io.github.dejvvit13.game.labels;
 
-import lombok.Getter;
-
 import javax.swing.*;
 import java.awt.*;
 
-@Getter
-public class TitleLabel {
+public class TitleLabel extends JLabel {
 
-    JLabel label = new JLabel();
+    private static final long serialVersionUID = 1L;
 
-    public void initializeTitleLabel() {
-        formatTitleLabel();
-    }
-
-    public void formatTitleLabel() {
-        setTitleLabelFont();
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-    }
-
-    private void setTitleLabelFont() {
-        label.setFont(new Font(Font.SERIF, Font.BOLD, 32));
+    public TitleLabel(String text) {
+        super(text);
+        setBackground(Color.BLACK);
+        setForeground(Color.WHITE);
+        setOpaque(true);
+        setHorizontalAlignment(SwingConstants.CENTER);
+        setFont(new Font(Font.SERIF, Font.BOLD, 32));
     }
 
 }
