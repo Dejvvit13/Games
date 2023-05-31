@@ -2,11 +2,13 @@ package io.github.dejvvit13.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 import java.util.Random;
 
 public class WizardOfYesNo extends JFrame {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private final String WINDOW_TITLE = "Wizard of Yes/No";
+    private static final String WINDOW_TITLE = "Wizard of Yes/No";
     private final String[] answers = {
             "Yes.",
             "Go for it!",
@@ -28,6 +30,7 @@ public class WizardOfYesNo extends JFrame {
         setWindowProperties();
         addAnswerLabel();
         drawAnswer();
+        createDisclaimer();
         pack();
     }
 
@@ -45,18 +48,41 @@ public class WizardOfYesNo extends JFrame {
     }
 
     private void formatAnswerLabel() {
-        setAnswerLabelFont();
-        answerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    }
-
-    private void setAnswerLabelFont() {
         Font font = new Font(Font.DIALOG, Font.BOLD, 32);
         answerLabel.setFont(font);
+        answerLabel.setOpaque(true);
+        answerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+    private void drawAnswer() {
+        int answerIndex = rand.nextInt(answers.length);
+        setProperBackgroundColorForAnswer(answerIndex);
+        answerLabel.setText(answers[answerIndex]);
     }
 
+    private void createDisclaimer() {
+        final String disclaimer = """
+                This program is for entertainment purposes only.
+                It is not intended to be used as a decision-making tool.
+                The author is not responsible for any consequences of using this program.
+                """;
+        JTextArea disclaimerArea = new JTextArea(disclaimer,3,30);
+        disclaimerArea.setEditable(false);
+        disclaimerArea.setLineWrap(true);
+        disclaimerArea.setWrapStyleWord(true);
+        createWithScroll(disclaimerArea);
+    }
 
-    private void drawAnswer() {
-        answerLabel.setText(answers[rand.nextInt(answers.length)]);
+    private void createWithScroll(Component component){
+        JScrollPane scrollPane = new JScrollPane(component);
+        scrollPane.setPreferredSize(new Dimension(0, 50));
+        add(scrollPane, BorderLayout.PAGE_END);
+    }
+    private void setProperBackgroundColorForAnswer(int answerIndex) {
+        if (answerIndex < 6) {
+            answerLabel.setBackground(Color.GREEN);
+        } else {
+            answerLabel.setBackground(Color.RED);
+        }
     }
 
 
